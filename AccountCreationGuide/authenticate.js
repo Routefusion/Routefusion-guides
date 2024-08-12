@@ -1,5 +1,5 @@
 const axios = require('axios');
-const token = require('../keys.json').rfKey
+const token = process.env.RF_KEY
 let data = JSON.stringify({
   query: `query myUser {
     myUser {
