@@ -1,17 +1,12 @@
 const axios = require('axios');
-const token = process.env.RF_KEY
+const token = process.env.RF_KEY;
 let data = JSON.stringify({
-  query: `query entityRequiredFields (
+  query: `query representativeRequiredFields (
     $country: ISO3166_1
-    $entity_type: EntityType
-    $business_type: BusinessType
 ) {
-    entityRequiredFields (
+    representativeRequiredFields (  
         country: $country
-        entity_type: $entity_type
-        business_type: $business_type
     ) {
-        requires_representatives
         documents {
             enum
             type
@@ -24,15 +19,15 @@ let data = JSON.stringify({
         }
     }
 }`,
-  variables: {"country":"US","entity_type":"business","business_type":"limited_liability_company"}
+  variables: {"country":"US"}
 });
 
 let config = {
   method: 'post',
   maxBodyLength: Infinity,
   url: 'https://sandbox.external.routefusion.com/graphql',
-  headers: {
-    'Content-Type': 'application/json',
+  headers: { 
+    'Content-Type': 'application/json', 
     'Authorization': `Bearer ${token}`
   },
   data : data
@@ -44,4 +39,4 @@ axios.request(config)
 })
 .catch((error) => {
   console.log(error);
-});
+});x3

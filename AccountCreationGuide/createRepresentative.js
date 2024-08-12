@@ -1,44 +1,41 @@
 const axios = require('axios');
-const token = process.env.RF_KEY
+const token = process.env.RF_KEY;
+
 let data = JSON.stringify({
-  query: `mutation createRepresentative(
-    $entity_id: UUID,
+  query: `mutation createRepresentative (
+    $entity_id: UUID
     $representative: RepresentativeInput
-  ) {
-    updateRepresentative(
-      representative: $representative,
-      id: $updateRepresentativeId
-    ) {
-      success
-      message
-    }
-  }`,
+) {
+    createRepresentative (
+        entity_id: $entity_id
+        representative: $representative
+    )
+}`,
   variables: {
     entity_id: "0c5f6e46-a0eb-4d8d-9498-df5a541c0548",
     representative: {
-      cert_expiration_date: null,
-      cert_issue_date: null,
-      cert_no: null,
-      citizenship: null,
-      date_of_birth: null,
-      email: null,
-      first_name: null,
-      is_signer: null,
-      last_name: null,
-      job_title: null,
-      ownership_percentage: null,
+      document_expiration_date: '1990-09-26T00:00:00Z',
+      document_issue_date: '2020-10-28T00:00:00Z',
+      document_number: '9078092879078320978',
+      citizenship: "USA",
+      date_of_birth: "1990-09-26T00:00:00Z",
+      email: 'meow@meow.com',
+      first_name: "John",
+      is_signer: true,
+      last_name: "Smith",
+      job_title: "CEO",
+      ownership_percentage: 100,
       passport_number: null,
-      phone: null,
-      residential_address: null,
+      phone: '2813308004',
+      residential_address: '1305 e 6th street',
       residential_address2: null,
-      residential_city: null,
-      residential_country: null,
-      residential_postal_code: null,
-      residential_state_province_region: null,
-      responsibility: null,
-      tax_number: null
-    },
-    updateRepresentativeId
+      residential_city: "Austin",
+      residential_country: "USA",
+      residential_postal_code: '78733',
+      residential_state_province_region: "TX",
+      responsibility: "UBO",  // Added responsibility
+      tax_number: '12123222'
+    }
   }
 });
 
@@ -58,5 +55,5 @@ axios.request(config)
     console.log(JSON.stringify(response.data, null, 2));
   })
   .catch((error) => {
-    console.error(error);
+    console.error(error.response ? error.response.data : error.message);
   });
